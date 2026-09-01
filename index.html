@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rastreo de Campo · Cumplimiento y Quiebres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ EMPTY STATE / UPLOAD ============ -->
+  <section id="uploadScreen" class="upload-screen">
+    <div class="upload-card">
+      <span class="upload-eyebrow">Rastreo de Campo</span>
+      <h1>Subí el reporte del mes para empezar</h1>
+      <p class="upload-copy">
+        Usá el archivo Excel que exporta el sistema de relevamiento (el mismo formato de
+        "Reporte de Supervisores": una pestaña de Quiebres y varias pestañas por tipo de
+        reporte con la columna Usuario). Todo se procesa en tu navegador — el archivo no
+        se envía a ningún servidor.
+      </p>
+
+      <label id="dropZone" class="drop-zone" for="fileInput">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0-12 4.5 4.5M12 3 7.5 7.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="drop-title">Arrastrá el archivo acá</span>
+        <span class="drop-sub">o hacé clic para elegirlo · .xlsx</span>
+        <input id="fileInput" type="file" accept=".xlsx,.xls" hidden>
+      </label>
+
+      <div id="uploadStatus" class="upload-status" aria-live="polite"></div>
+
+      <details class="upload-help">
+        <summary>¿Qué necesita tener el archivo?</summary>
+        <ul>
+          <li>Una pestaña de quiebres con columnas <b>Punto De Venta</b>, <b>Producto</b>, <b>Cadena</b>, <b>Categoria</b> y <b>Disponible</b> (Si/No).</li>
+          <li>Una o más pestañas de reportes de campo (Innovaciones, Línea de góndola, Espacios adicionales, Materiales POP, Surtido, Precios…) con columna <b>Usuario</b> y <b>Fecha</b>.</li>
+          <li>La app detecta las pestañas automáticamente por sus columnas, no por el nombre exacto.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ MAIN APP ============ -->
+  <div id="mainScreen" class="main-screen hidden">
+
+    <aside class="rail">
+      <div class="rail-brand">
+        <span class="rail-brand-mark">RC</span>
+        <span class="rail-brand-name">Rastreo de<br>Campo</span>
+      </div>
+
+      <nav class="rail-nav">
+        <button class="rail-item active" data-tab="resumen">
+          <span class="rail-dot"></span>Resumen
+        </button>
+        <button class="rail-item" data-tab="cumplimiento">
+          <span class="rail-dot"></span>Cumplimiento
+        </button>
+        <div class="rail-group-label">Quiebre</div>
+        <button class="rail-item" data-tab="quiebre-pdv">
+          <span class="rail-dot"></span>Punto de venta
+        </button>
+        <button class="rail-item" data-tab="quiebre-producto">
+          <span class="rail-dot"></span>Producto
+        </button>
+        <button class="rail-item" data-tab="quiebre-cadena">
+          <span class="rail-dot"></span>Cadena
+        </button>
+        <button class="rail-item" data-tab="quiebre-categoria">
+          <span class="rail-dot"></span>Cadena × Categoría
+        </button>
+      </nav>
+
+      <button id="changeFileBtn" class="rail-change-file">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M4 4v5h5M20 20v-5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cambiar archivo
+      </button>
+    </aside>
+
+    <main class="content">
+      <header class="content-header">
+        <div id="fileChip" class="file-chip"></div>
+        <div id="filterBar" class="filter-bar"></div>
+      </header>
+
+      <div id="panel-resumen" class="panel"></div>
+      <div id="panel-cumplimiento" class="panel hidden"></div>
+      <div id="panel-quiebre-pdv" class="panel hidden"></div>
+      <div id="panel-quiebre-producto" class="panel hidden"></div>
+      <div id="panel-quiebre-cadena" class="panel hidden"></div>
+      <div id="panel-quiebre-categoria" class="panel hidden"></div>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/analysis.js"></script>
+<script src="js/components.js"></script>
+<script src="js/tab-resumen.js"></script>
+<script src="js/tab-cumplimiento.js"></script>
+<script src="js/tab-quiebre.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
