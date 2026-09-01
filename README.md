@@ -1,4 +1,4 @@
-# Rastreo de Campo — Cumplimiento y Quiebres
+# Rastreo de Campo  Cumplimiento y Quiebres
 
 Panel web para que quien monitorea al equipo de campo pueda, cada mes, subir el
 Excel de relevamiento y ver al instante:
